@@ -6,7 +6,7 @@ import prisma from "@/lib/prisma";
 
 
 const StudentPage = async () => {
-  const { userId } = auth();
+  const { userId } = {userId:'admin1'};
 
   const classItem = await prisma.class.findMany({
     where: {

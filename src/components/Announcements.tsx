@@ -2,7 +2,7 @@ import prisma from "@/lib/prisma";
 
 
 const Announcements = async () => {
-  const { userId, sessionClaims } = {userId:'1', sessionClaims:{metadata:{role:'admin'}}};
+  const { userId, sessionClaims } = {userId:'admin1', sessionClaims:{metadata:{role:'admin'}}};
   const role = (sessionClaims?.metadata as { role?: string })?.role;
 
   const roleConditions = {

@@ -363,7 +363,7 @@ export const createExam = async (
   currentState: CurrentState,
   data: ExamSchema
 ) => {
-  // const { userId, sessionClaims } = {userId:'1', sessionClaims:{metadata:{role:'admin'}}};
+  // const { userId, sessionClaims } = {userId:'admin1', sessionClaims:{metadata:{role:'admin'}}};
   // const role = (sessionClaims?.metadata as { role?: string })?.role;
 
   try {
@@ -401,7 +401,7 @@ export const updateExam = async (
   currentState: CurrentState,
   data: ExamSchema
 ) => {
-  // const { userId, sessionClaims } = {userId:'1', sessionClaims:{metadata:{role:'admin'}}};
+  // const { userId, sessionClaims } = {userId:'admin1', sessionClaims:{metadata:{role:'admin'}}};
   // const role = (sessionClaims?.metadata as { role?: string })?.role;
 
   try {
@@ -444,7 +444,7 @@ export const deleteExam = async (
 ) => {
   const id = data.get("id") as string;
 
-  // const { userId, sessionClaims } = {userId:'1', sessionClaims:{metadata:{role:'admin'}}};
+  // const { userId, sessionClaims } = {userId:'admin1', sessionClaims:{metadata:{role:'admin'}}};
   // const role = (sessionClaims?.metadata as { role?: string })?.role;
 
   try {

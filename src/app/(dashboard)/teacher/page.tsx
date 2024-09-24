@@ -3,7 +3,7 @@ import BigCalendarContainer from "@/components/BigCalendarContainer";
 
 
 const TeacherPage = () => {
-  const { userId } = auth();
+  const { userId } = {userId:'admin1'};
   return (
     <div className="flex-1 p-4 flex gap-4 flex-col xl:flex-row">
       {/* LEFT */}
