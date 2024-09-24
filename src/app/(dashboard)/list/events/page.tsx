@@ -6,7 +6,7 @@ import prisma from "@/lib/prisma";
 import { ITEM_PER_PAGE } from "@/lib/settings";
 import { Class, Event, Prisma } from "@prisma/client";
 import Image from "next/image";
-import { auth } from "@clerk/nextjs/server";
+
 
 type EventList = Event & { class: Class };
 
@@ -16,7 +16,7 @@ const EventListPage = async ({
   searchParams: { [key: string]: string | undefined };
 }) => {
 
-  const { userId, sessionClaims } = auth();
+  const { userId, sessionClaims } = {userId:'1', sessionClaims:{metadata:{role:'admin'}}};
   const role = (sessionClaims?.metadata as { role?: string })?.role;
   const currentUserId = userId;
 

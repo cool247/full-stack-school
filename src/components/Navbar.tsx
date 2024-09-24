@@ -1,9 +1,7 @@
-import { UserButton } from "@clerk/nextjs";
-import { currentUser } from "@clerk/nextjs/server";
 import Image from "next/image";
 
 const Navbar = async () => {
-  const user = await currentUser();
+  const user = {publicMetadata:{role:'admin'}};;
   return (
     <div className="flex items-center justify-between p-4">
       {/* SEARCH BAR */}
@@ -33,7 +31,6 @@ const Navbar = async () => {
           </span>
         </div>
         {/* <Image src="/avatar.png" alt="" width={36} height={36} className="rounded-full"/> */}
-        <UserButton />
       </div>
     </div>
   );
