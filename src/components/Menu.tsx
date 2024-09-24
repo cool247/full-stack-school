@@ -11,7 +11,7 @@ const menuItems = [
       {
         icon: "/home.png",
         label: "Home",
-        href: "/",
+        href: "/dashboard",
         visible: ["admin", "teacher", "student", "parent"],
       },
       {
@@ -109,7 +109,6 @@ const menuItems = [
         href: "/settings",
         visible: ["admin", "teacher", "student", "parent"],
       },
-      
     ],
   },
 ];
@@ -130,7 +129,7 @@ const Menu = async () => {
             if (item.visible.includes(role || "")) {
               return (
                 <Link
-                  href={item.href}
+                  href={item.href === "/dashboard" ? role || "/" : item.href}
                   key={item.label}
                   // onClick={handleSignOut}
                   className="flex items-center justify-center lg:justify-start gap-4 text-gray-500 py-2 md:px-2 rounded-md hover:bg-davSkyLight">
