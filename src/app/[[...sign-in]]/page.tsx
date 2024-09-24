@@ -5,10 +5,10 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
-export const adminUser = { role: "admin", userId: "admin1" };
-export const teacherUser = { role: "teacher", userId: "teacher1" };
-export const studentUser = { role: "student", userId: "student1" };
-export const parentUser = { role: "parent", userId: "parent1" };
+const adminUser = { role: "admin", userId: "admin1" };
+const teacherUser = { role: "teacher", userId: "teacher1" };
+const studentUser = { role: "student", userId: "student1" };
+const parentUser = { role: "parent", userId: "parent1" };
 //
 
 const LoginPage = () => {
