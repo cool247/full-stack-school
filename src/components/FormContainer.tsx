@@ -1,6 +1,7 @@
 import prisma from "@/lib/prisma";
 import FormModal from "./FormModal";
-
+import { getAuth } from "@/utils/auth";
+import { cookies } from "next/headers";
 
 export type FormContainerProps = {
   table:
@@ -24,8 +25,8 @@ export type FormContainerProps = {
 const FormContainer = async ({ table, type, data, id }: FormContainerProps) => {
   let relatedData = {};
 
-  const { userId, sessionClaims } = {userId:'admin1', sessionClaims:{metadata:{role:'admin'}}};
-  const role = (sessionClaims?.metadata as { role?: string })?.role;
+  const cookieStore = cookies(); // Access cookies from next/headers
+  const { userId, role } = getAuth(cookieStore); // Pass cookies to getAuth
   const currentUserId = userId;
 
   if (type !== "delete") {
@@ -77,13 +78,7 @@ const FormContainer = async ({ table, type, data, id }: FormContainerProps) => {
 
   return (
     <div className="">
-      <FormModal
-        table={table}
-        type={type}
-        data={data}
-        id={id}
-        relatedData={relatedData}
-      />
+      <FormModal table={table} type={type} data={data} id={id} relatedData={relatedData} />
     </div>
   );
 };

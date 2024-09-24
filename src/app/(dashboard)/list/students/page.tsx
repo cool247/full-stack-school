@@ -5,7 +5,9 @@ import TableSearch from "@/components/TableSearch";
 
 import prisma from "@/lib/prisma";
 import { ITEM_PER_PAGE } from "@/lib/settings";
+import { getAuth } from "@/utils/auth";
 import { Class, Prisma, Student } from "@prisma/client";
+import { cookies } from "next/headers";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -18,8 +20,8 @@ const StudentListPage = async ({
 }: {
   searchParams: { [key: string]: string | undefined };
 }) => {
-  const { sessionClaims } = { sessionClaims:{metadata:{role:'admin'}}};
-  const role = (sessionClaims?.metadata as { role?: string })?.role;
+  const cookieStore = cookies(); // Access cookies from next/headers
+  const { userId, role } = getAuth(cookieStore); // Pass cookies to getAuth
 
   const columns = [
     {

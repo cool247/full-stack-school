@@ -1,13 +1,14 @@
 import Announcements from "@/components/Announcements";
 import BigCalendarContainer from "@/components/BigCalendarContainer";
+import { getAuth } from "@/utils/auth";
+import { cookies } from "next/headers";
 import prisma from "@/lib/prisma";
 
-
-
 const ParentPage = async () => {
-  const { userId } = {userId:'admin1'};
+  const cookieStore = cookies(); // Access cookies from next/headers
+  const { userId, role } = getAuth(cookieStore); // Pass cookies to getAuth
   const currentUserId = userId;
-  
+
   const students = await prisma.student.findMany({
     where: {
       parentId: currentUserId!,
@@ -21,9 +22,7 @@ const ParentPage = async () => {
         {students.map((student) => (
           <div className="w-full xl:w-2/3" key={student.id}>
             <div className="h-full bg-white p-4 rounded-md">
-              <h1 className="text-xl font-semibold">
-                Schedule ({student.name + " " + student.surname})
-              </h1>
+              <h1 className="text-xl font-semibold">Schedule ({student.name + " " + student.surname})</h1>
               <BigCalendarContainer type="classId" id={student.classId} />
             </div>
           </div>

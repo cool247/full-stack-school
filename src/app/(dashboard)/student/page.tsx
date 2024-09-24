@@ -1,16 +1,18 @@
 import Announcements from "@/components/Announcements";
 import BigCalendarContainer from "@/components/BigCalendarContainer";
-import BigCalendar from "@/components/BigCalender";
+// import BigCalendar from "@/components/BigCalender";
 import EventCalendar from "@/components/EventCalendar";
+import { getAuth } from "@/utils/auth";
+import { cookies } from "next/headers";
 import prisma from "@/lib/prisma";
 
-
 const StudentPage = async () => {
-  const { userId } = {userId:'admin1'};
+  const cookieStore = cookies(); // Access cookies from next/headers
+  const { userId } = getAuth(cookieStore); // Pass cookies to getAuth
 
   const classItem = await prisma.class.findMany({
     where: {
-      students: { some: { id: userId! } },
+      students: { some: { id: userId! || "student1" } },
     },
   });
 

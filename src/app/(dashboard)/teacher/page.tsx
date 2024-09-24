@@ -1,9 +1,11 @@
 import Announcements from "@/components/Announcements";
 import BigCalendarContainer from "@/components/BigCalendarContainer";
-
+import { getAuth } from "@/utils/auth";
+import { cookies } from "next/headers";
 
 const TeacherPage = () => {
-  const { userId } = {userId:'admin1'};
+  const cookieStore = cookies(); // Access cookies from next/headers
+  const { userId, role } = getAuth(cookieStore); // Pass cookies to getAuth
   return (
     <div className="flex-1 p-4 flex gap-4 flex-col xl:flex-row">
       {/* LEFT */}

@@ -2,6 +2,8 @@ import FormContainer from "@/components/FormContainer";
 import Pagination from "@/components/Pagination";
 import Table from "@/components/Table";
 import TableSearch from "@/components/TableSearch";
+import { getAuth } from "@/utils/auth";
+import { cookies } from "next/headers";
 import prisma from "@/lib/prisma";
 import { ITEM_PER_PAGE } from "@/lib/settings";
 import { Prisma, Subject, Teacher } from "@prisma/client";
@@ -15,8 +17,8 @@ const SubjectListPage = async ({
 }: {
   searchParams: { [key: string]: string | undefined };
 }) => {
-  const { sessionClaims } = { sessionClaims:{metadata:{role:'admin'}}};
-  const role = (sessionClaims?.metadata as { role?: string })?.role;
+  const cookieStore = cookies(); // Access cookies from next/headers
+  const { userId, role } = getAuth(cookieStore); // Pass cookies to getAuth
 
   const columns = [
     {

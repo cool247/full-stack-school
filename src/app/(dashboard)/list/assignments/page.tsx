@@ -4,6 +4,8 @@ import Table from "@/components/Table";
 import TableSearch from "@/components/TableSearch";
 import prisma from "@/lib/prisma";
 import { ITEM_PER_PAGE } from "@/lib/settings";
+import { getAuth } from "@/utils/auth";
+import { cookies } from "next/headers";
 import { Assignment, Class, Prisma, Subject, Teacher } from "@prisma/client";
 import Image from "next/image";
 
@@ -21,8 +23,8 @@ const AssignmentListPage = async ({
   searchParams: { [key: string]: string | undefined };
 }) => {
 
-  const { userId, sessionClaims } = {userId:'admin1', sessionClaims:{metadata:{role:'admin'}}};
-  const role = (sessionClaims?.metadata as { role?: string })?.role;
+  const cookieStore = cookies(); // Access cookies from next/headers
+  const { userId, role } = getAuth(cookieStore); // Pass cookies to getAuth
   const currentUserId = userId;
   
   

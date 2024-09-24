@@ -12,6 +12,9 @@ import prisma from "./prisma";
 import { randomUUID } from "crypto";
 // import { clerkClient } from "@clerk/nextjs/server";
 
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
+
 type CurrentState = { success: boolean; error: boolean };
 
 export const createSubject = async (
@@ -462,3 +465,17 @@ export const deleteExam = async (
     return { success: false, error: true };
   }
 };
+
+
+
+
+export async function signOut() {
+  const cookieStore = cookies();
+
+  // Clear cookies
+  cookieStore.set('userId', '', { expires: new Date(0) });
+  cookieStore.set('role', '', { expires: new Date(0) });
+
+  // Perform a server-side redirect to the home page
+  redirect('/');
+}

@@ -1,9 +1,10 @@
+import { getAuth } from "@/utils/auth";
+import { cookies } from "next/headers";
 import prisma from "@/lib/prisma";
 
-
 const Announcements = async () => {
-  const { userId, sessionClaims } = {userId:'admin1', sessionClaims:{metadata:{role:'admin'}}};
-  const role = (sessionClaims?.metadata as { role?: string })?.role;
+  const cookieStore = cookies(); // Access cookies from next/headers
+  const { userId, role } = getAuth(cookieStore); // Pass cookies to getAuth
 
   const roleConditions = {
     teacher: { lessons: { some: { teacherId: userId! } } },
@@ -16,10 +17,7 @@ const Announcements = async () => {
     orderBy: { date: "desc" },
     where: {
       ...(role !== "admin" && {
-        OR: [
-          { classId: null },
-          { class: roleConditions[role as keyof typeof roleConditions] || {} },
-        ],
+        OR: [{ classId: null }, { class: roleConditions[role as keyof typeof roleConditions] || {} }],
       }),
     },
   });

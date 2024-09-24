@@ -1,6 +1,8 @@
-import { currentUser } from "@clerk/nextjs/server";
+import { getAuth } from "@/utils/auth";
+import { cookies } from "next/headers";
 import Image from "next/image";
 import Link from "next/link";
+import LogoutButton from "./LogoutButton";
 
 const menuItems = [
   {
@@ -107,19 +109,16 @@ const menuItems = [
         href: "/settings",
         visible: ["admin", "teacher", "student", "parent"],
       },
-      {
-        icon: "/logout.png",
-        label: "Logout",
-        href: "/logout",
-        visible: ["admin", "teacher", "student", "parent"],
-      },
+      
     ],
   },
 ];
 
 const Menu = async () => {
-  const user = { publicMetadata: { role: "admin" } };
-  const role = user?.publicMetadata.role as string;
+  const cookieStore = cookies();
+  const { role } = getAuth(cookieStore);
+  console.log("========================", role, "===========");
+
   return (
     <div
       style={{ maxHeight: "calc(100vh - 80px)" }}
@@ -128,11 +127,12 @@ const Menu = async () => {
         <div className="flex flex-col gap-2" key={i.title}>
           <span className="hidden lg:block text-gray-400 font-light my-4">{i.title}</span>
           {i.items.map((item) => {
-            if (item.visible.includes(role)) {
+            if (item.visible.includes(role || "")) {
               return (
                 <Link
                   href={item.href}
                   key={item.label}
+                  // onClick={handleSignOut}
                   className="flex items-center justify-center lg:justify-start gap-4 text-gray-500 py-2 md:px-2 rounded-md hover:bg-davSkyLight">
                   <Image src={item.icon} alt="" width={20} height={20} />
                   <span className="hidden lg:block">{item.label}</span>
@@ -142,6 +142,8 @@ const Menu = async () => {
           })}
         </div>
       ))}
+
+      <LogoutButton />
     </div>
   );
 };

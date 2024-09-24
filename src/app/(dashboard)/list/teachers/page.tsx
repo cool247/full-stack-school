@@ -7,6 +7,8 @@ import { Class, Prisma, Subject, Teacher } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
 import { ITEM_PER_PAGE } from "@/lib/settings";
+import { getAuth } from "@/utils/auth";
+import { cookies } from "next/headers";
 
 
 type TeacherList = Teacher & { subjects: Subject[] } & { classes: Class[] };
@@ -16,8 +18,8 @@ const TeacherListPage = async ({
 }: {
   searchParams: { [key: string]: string | undefined };
 }) => {
-  const { sessionClaims } = { sessionClaims:{metadata:{role:'admin'}}};
-  const role = (sessionClaims?.metadata as { role?: string })?.role;
+  const cookieStore = cookies(); // Access cookies from next/headers
+  const { userId, role } = getAuth(cookieStore); // Pass cookies to getAuth
   const columns = [
     {
       header: "Info",
