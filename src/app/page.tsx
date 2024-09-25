@@ -55,7 +55,7 @@ const LoginPage = () => {
         SchoolDav
       </h1>
       <div className="max-w-md flex flex-col gap-3 mx-auto">
-        <h2 className="text-yellow-800 bg-slate-200 text-center text-3xl mb-4">Sign int</h2>
+        <h2 className="text-yellow-800 bg-slate-200 text-center text-3xl mb-4">Sign IN</h2>
         <button
           className="px-4, py-2 text-white px-4 rounded bg-blue-400 hover:bg-blue-500 ring-1"
           onClick={() => signIn(adminUser.role, adminUser.userId)}>
@@ -83,11 +83,16 @@ const LoginPage = () => {
 
 export default LoginPage;
 
-function OverLay() {
+export function OverLay({ title = "Loading, Please Wait", onClose }: { title?: string; onClose?: () => void }) {
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
-      <div className="bg-white p-8 rounded-lg shadow-lg">
-        <p>Loading, Please Wait</p>
+      <div className="bg-white p-8 rounded-lg shadow-lg text-center">
+        <p>{title}</p>
+        {onClose && (
+          <button className="text-white px-4 rounded bg-red-400 hover:bg-red-500 ring-1 mt-5" onClick={onClose}>
+            Close
+          </button>
+        )}
       </div>
     </div>
   );

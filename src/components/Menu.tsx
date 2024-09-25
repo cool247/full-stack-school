@@ -121,7 +121,7 @@ const Menu = async () => {
   return (
     <div
       style={{ maxHeight: "calc(100vh - 80px)" }}
-      className="mt-4 text-sm overflow-y-scroll thin-scrollbar scroll-auto overflow-auto">
+      className="mt-4 text-sm  thin-scrollbar overflow-auto">
       {menuItems.map((i) => (
         <div className="flex flex-col gap-2" key={i.title}>
           <span className="hidden lg:block text-gray-400 font-light my-4">{i.title}</span>
@@ -129,10 +129,12 @@ const Menu = async () => {
             if (item.visible.includes(role || "")) {
               return (
                 <Link
-                  href={item.href === "/dashboard" ? '/'+role || "/" : item.href}
+                  href={item.href === "/dashboard" ? "/" + role || "/" : item.href}
                   key={item.label}
                   // onClick={handleSignOut}
-                  className="flex items-center justify-center lg:justify-start gap-4 text-gray-500 py-2 md:px-2 rounded-md hover:bg-davSkyLight">
+                  className={
+                    "flex items-center justify-center lg:justify-start gap-4 text-gray-500 py-2 md:px-2 rounded-md hover:bg-davSkyLight"
+                  }>
                   <Image src={item.icon} alt="" width={20} height={20} />
                   <span className="hidden lg:block">{item.label}</span>
                 </Link>

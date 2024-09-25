@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  deleteClass,
-  deleteExam,
-  deleteStudent,
-  deleteSubject,
-  deleteTeacher,
-} from "@/lib/actions";
+import { deleteClass, deleteExam, deleteStudent, deleteSubject, deleteTeacher } from "@/lib/actions";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -14,6 +8,7 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useFormState } from "react-dom";
 import { toast } from "react-toastify";
 import { FormContainerProps } from "./FormContainer";
+import { OverLay } from "@/app/page";
 
 const deleteActionMap = {
   subject: deleteSubject,
@@ -21,7 +16,7 @@ const deleteActionMap = {
   teacher: deleteTeacher,
   student: deleteStudent,
   exam: deleteExam,
-// TODO: OTHER DELETE ACTIONS
+  // TODO: OTHER DELETE ACTIONS
   parent: deleteSubject,
   lesson: deleteSubject,
   assignment: deleteSubject,
@@ -62,62 +57,26 @@ const forms: {
   ) => JSX.Element;
 } = {
   subject: (setOpen, type, data, relatedData) => (
-    <SubjectForm
-      type={type}
-      data={data}
-      setOpen={setOpen}
-      relatedData={relatedData}
-    />
+    <SubjectForm type={type} data={data} setOpen={setOpen} relatedData={relatedData} />
   ),
   class: (setOpen, type, data, relatedData) => (
-    <ClassForm
-      type={type}
-      data={data}
-      setOpen={setOpen}
-      relatedData={relatedData}
-    />
+    <ClassForm type={type} data={data} setOpen={setOpen} relatedData={relatedData} />
   ),
   teacher: (setOpen, type, data, relatedData) => (
-    <TeacherForm
-      type={type}
-      data={data}
-      setOpen={setOpen}
-      relatedData={relatedData}
-    />
+    <TeacherForm type={type} data={data} setOpen={setOpen} relatedData={relatedData} />
   ),
   student: (setOpen, type, data, relatedData) => (
-    <StudentForm
-      type={type}
-      data={data}
-      setOpen={setOpen}
-      relatedData={relatedData}
-    />
+    <StudentForm type={type} data={data} setOpen={setOpen} relatedData={relatedData} />
   ),
   exam: (setOpen, type, data, relatedData) => (
-    <ExamForm
-      type={type}
-      data={data}
-      setOpen={setOpen}
-      relatedData={relatedData}
-    />
+    <ExamForm type={type} data={data} setOpen={setOpen} relatedData={relatedData} />
     // TODO OTHER LIST ITEMS
   ),
 };
 
-const FormModal = ({
-  table,
-  type,
-  data,
-  id,
-  relatedData,
-}: FormContainerProps & { relatedData?: any }) => {
+const FormModal = ({ table, type, data, id, relatedData }: FormContainerProps & { relatedData?: any }) => {
   const size = type === "create" ? "w-8 h-8" : "w-7 h-7";
-  const bgColor =
-    type === "create"
-      ? "bg-davYellow"
-      : type === "update"
-      ? "bg-davSky"
-      : "bg-davPurple";
+  const bgColor = type === "create" ? "bg-davYellow" : type === "update" ? "bg-davSky" : "bg-davPurple";
 
   const [open, setOpen] = useState(false);
 
@@ -143,14 +102,12 @@ const FormModal = ({
         <span className="text-center font-medium">
           All data will be lost. Are you sure you want to delete this {table}?
         </span>
-        <button className="bg-red-700 text-white py-2 px-4 rounded-md border-none w-max self-center">
-          Delete
-        </button>
+        <button className="bg-red-700 text-white py-2 px-4 rounded-md border-none w-max self-center">Delete</button>
       </form>
-    ) : type === "create" || type === "update" ? (
+    ) : (type === "create" || type === "update") && forms[table] ? (
       forms[table](setOpen, type, data, relatedData)
     ) : (
-      "Form not found!"
+      <p className="underline bg-red-50 text-red-600" >Under development</p>
     );
   };
 
@@ -158,18 +115,14 @@ const FormModal = ({
     <>
       <button
         className={`${size} flex items-center justify-center rounded-full ${bgColor}`}
-        onClick={() => setOpen(true)}
-      >
+        onClick={() => setOpen(true)}>
         <Image src={`/${type}.png`} alt="" width={16} height={16} />
       </button>
       {open && (
         <div className="w-screen h-screen absolute left-0 top-0 bg-black bg-opacity-60 z-50 flex items-center justify-center">
           <div className="bg-white p-4 rounded-md relative w-[90%] md:w-[70%] lg:w-[60%] xl:w-[50%] 2xl:w-[40%]">
             <Form />
-            <div
-              className="absolute top-4 right-4 cursor-pointer"
-              onClick={() => setOpen(false)}
-            >
+            <div className="absolute top-4 right-4 cursor-pointer" onClick={() => setOpen(false)}>
               <Image src="/close.png" alt="" width={14} height={14} />
             </div>
           </div>
